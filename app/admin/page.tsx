@@ -1,13 +1,19 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { StatsCard } from "@/components/admin/stats-card"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { orders } from "@/lib/mock-data"
 import { FileText, Clock, CheckCircle, AlertTriangle, TrendingUp } from "lucide-react"
 import { formatCurrency } from "@/lib/utils"
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from "recharts"
-import { getStatusConfig } from "@/lib/status-config" // Import getStatusConfig
+import { getStatusConfig } from "@/lib/status-config"
+
+// Dynamic import to avoid SSR issues with Recharts
+const DashboardCharts = dynamic(
+  () => import("@/components/admin/dashboard-charts").then((mod) => mod.DashboardCharts),
+  { ssr: false, loading: () => <div className="h-[250px] flex items-center justify-center">Cargando gráficos...</div> }
+)
 
 export default function AdminDashboard() {
   // Calculate stats
@@ -40,8 +46,6 @@ export default function AdminDashboard() {
     { name: "En Entrega", value: orders.filter((o) => o.status === "EN_ENTREGA").length, fill: "#3b82f6" },
     { name: "Entregado", value: orders.filter((o) => o.status === "ENTREGADO").length, fill: "#10b981" },
   ].filter((s) => s.value > 0)
-
-  const COLORS = ["#3b82f6", "#06b6d4", "#f97316", "#10b981", "#8b5cf6", "#ec4899"]
 
   // Recent alerts
   const recentOrders = orders.slice(0, 5)
@@ -81,46 +85,8 @@ export default function AdminDashboard() {
         </div>
       </Card>
 
-      {/* Charts Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Orders by Zone */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Pedidos por Zona</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={ordersByZone}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
-              <Bar dataKey="value" fill="#1e40af" radius={[8, 8, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
-        </Card>
-
-        {/* Orders by Status */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Pedidos por Estado</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <PieChart>
-              <Pie
-                data={ordersByStatus}
-                cx="50%"
-                cy="50%"
-                labelLine={false}
-                label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                outerRadius={80}
-                fill="#8884d8"
-                dataKey="value"
-              >
-                {ordersByStatus.map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                ))}
-              </Pie>
-              <Tooltip />
-            </PieChart>
-          </ResponsiveContainer>
-        </Card>
-      </div>
+      {/* Charts Grid - Dynamic import to avoid SSR issues */}
+      <DashboardCharts ordersByZone={ordersByZone} ordersByStatus={ordersByStatus} />
 
       {/* Recent Orders */}
       <Card className="p-6">
