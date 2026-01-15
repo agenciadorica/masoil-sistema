@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card } from "@/components/ui/card"
 import { products } from "@/lib/mock-data"
 import { Search, Plus, Download, Upload } from "lucide-react"
+import Link from "next/link"
 
 export default function AdminStockPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -68,9 +69,11 @@ export default function AdminStockPage() {
             <Download className="h-4 w-4 mr-2" />
             Exportar
           </Button>
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            Nuevo Producto
+          <Button asChild>
+            <Link href="/admin/stock/nuevo">
+              <Plus className="h-4 w-4 mr-2" />
+              Nuevo Producto
+            </Link>
           </Button>
         </div>
       </div>

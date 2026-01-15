@@ -16,11 +16,15 @@ const navItems = [
   { href: "/admin/configuracion", label: "Configuración", icon: Settings },
 ]
 
-export function SidebarNav() {
+interface AdminSidebarContentProps {
+  onNavigate?: () => void
+}
+
+export function AdminSidebarContent({ onNavigate }: AdminSidebarContentProps) {
   const pathname = usePathname()
 
   return (
-    <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
+    <>
       <div className="p-6 border-b border-sidebar-border">
         <h1 className="text-xl font-bold text-sidebar-primary">Masoil Lubricantes</h1>
         <p className="text-sm text-sidebar-foreground/60 mt-1">Panel Administrativo</p>
@@ -35,6 +39,7 @@ export function SidebarNav() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={cn(
                 "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors text-sm font-medium",
                 isActive
@@ -60,6 +65,15 @@ export function SidebarNav() {
           </div>
         </div>
       </div>
+    </>
+  )
+}
+
+// Legacy export for backwards compatibility
+export function SidebarNav() {
+  return (
+    <aside className="w-64 bg-sidebar border-r border-sidebar-border flex flex-col">
+      <AdminSidebarContent />
     </aside>
   )
 }

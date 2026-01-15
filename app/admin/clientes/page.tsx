@@ -8,6 +8,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Card } from "@/components/ui/card"
 import { clients, vendedores } from "@/lib/mock-data"
 import { Search, Plus, Download, Users, MapPin, TrendingUp } from "lucide-react"
+import Link from "next/link"
 
 export default function AdminClientesPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -52,9 +53,11 @@ export default function AdminClientesPage() {
             <Download className="h-4 w-4 mr-2" />
             Exportar
           </Button>
-          <Button>
-            <Plus className="h-4 w-4 mr-2" />
-            Nuevo Cliente
+          <Button asChild>
+            <Link href="/admin/clientes/nuevo">
+              <Plus className="h-4 w-4 mr-2" />
+              Nuevo Cliente
+            </Link>
           </Button>
         </div>
       </div>

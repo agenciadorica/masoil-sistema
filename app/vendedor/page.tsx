@@ -62,12 +62,12 @@ export default function VendedorDashboard() {
       </div>
 
       {/* Stats */}
-      <div className="px-4 -mt-4">
+      <div className="px-4 pt-6">
         <QuickStats todayOrders={todayOrders} pendingOrders={pendingOrders} urgentOrders={urgentOrders} />
       </div>
 
       {/* Recent Orders */}
-      <div className="p-4 space-y-4">
+      <div className="p-4 pt-6 space-y-4">
         <div className="flex items-center justify-between">
           <h2 className="text-lg font-bold">Mis Pedidos Recientes</h2>
           <Button asChild variant="ghost" size="sm">

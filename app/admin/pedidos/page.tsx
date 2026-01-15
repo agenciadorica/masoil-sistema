@@ -6,7 +6,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { orders } from "@/lib/mock-data"
-import { Search, Download } from "lucide-react"
+import { Search, Download, Plus } from "lucide-react"
+import Link from "next/link"
 
 export default function AdminPedidosPage() {
   const [searchTerm, setSearchTerm] = useState("")
@@ -47,10 +48,18 @@ export default function AdminPedidosPage() {
           <h1 className="text-3xl font-bold mb-2">Gestión de Pedidos</h1>
           <p className="text-muted-foreground">Administra todos los pedidos del sistema</p>
         </div>
-        <Button>
-          <Download className="h-4 w-4 mr-2" />
-          Exportar
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="outline">
+            <Download className="h-4 w-4 mr-2" />
+            Exportar
+          </Button>
+          <Button asChild>
+            <Link href="/admin/pedidos/nuevo">
+              <Plus className="h-4 w-4 mr-2" />
+              Nuevo Pedido
+            </Link>
+          </Button>
+        </div>
       </div>
 
       {/* Filters */}
