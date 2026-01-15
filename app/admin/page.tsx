@@ -51,15 +51,15 @@ export default function AdminDashboard() {
   const recentOrders = orders.slice(0, 5)
 
   return (
-    <div className="p-8 space-y-8">
+    <div className="p-4 md:p-8 space-y-6 md:space-y-8">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold mb-2">Dashboard Administrativo</h1>
-        <p className="text-muted-foreground">Vista general del sistema de pedidos</p>
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">Dashboard Administrativo</h1>
+        <p className="text-sm md:text-base text-muted-foreground">Vista general del sistema de pedidos</p>
       </div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 md:gap-6">
         <StatsCard title="Pedidos Hoy" value={todayOrders} icon={FileText} trend="+12% vs ayer" trendUp={true} />
         <StatsCard title="Pedidos Pendientes" value={pendingOrders} icon={Clock} />
         <StatsCard title="Pedidos Completados" value={completedOrders} icon={CheckCircle} />
@@ -73,14 +73,14 @@ export default function AdminDashboard() {
       </div>
 
       {/* Revenue Card */}
-      <Card className="p-6">
+      <Card className="p-4 md:p-6">
         <div className="flex items-center justify-between">
           <div>
             <p className="text-sm font-medium text-muted-foreground mb-1">Facturación Hoy</p>
-            <p className="text-3xl font-bold">{formatCurrency(todayRevenue)}</p>
+            <p className="text-2xl md:text-3xl font-bold">{formatCurrency(todayRevenue)}</p>
           </div>
-          <div className="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center">
-            <TrendingUp className="h-6 w-6 text-green-600" />
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-green-100 flex items-center justify-center">
+            <TrendingUp className="h-5 w-5 md:h-6 md:w-6 text-green-600" />
           </div>
         </div>
       </Card>
@@ -89,23 +89,23 @@ export default function AdminDashboard() {
       <DashboardCharts ordersByZone={ordersByZone} ordersByStatus={ordersByStatus} />
 
       {/* Recent Orders */}
-      <Card className="p-6">
+      <Card className="p-4 md:p-6">
         <h3 className="text-lg font-semibold mb-4">Pedidos Recientes</h3>
         <div className="space-y-3">
           {recentOrders.map((order) => (
-            <div key={order.id} className="flex items-center justify-between p-4 border rounded-lg">
-              <div className="flex items-center gap-4">
-                <div>
+            <div key={order.id} className="flex flex-col md:flex-row md:items-center justify-between p-3 md:p-4 border rounded-lg gap-3">
+              <div className="flex items-center gap-3 md:gap-4">
+                <div className="min-w-0">
                   <p className="font-mono text-sm font-semibold">#{order.id}</p>
-                  <p className="text-sm text-muted-foreground">{order.clientName}</p>
+                  <p className="text-sm text-muted-foreground truncate">{order.clientName}</p>
                 </div>
-                <Badge variant="outline" className="text-xs">
+                <Badge variant="outline" className="text-xs shrink-0">
                   {order.zona}
                 </Badge>
               </div>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-between md:justify-end gap-3 md:gap-4">
                 <p className="font-semibold">{formatCurrency(order.total)}</p>
-                <Badge className={`${getStatusConfig(order.status).bgColor} ${getStatusConfig(order.status).color}`}>
+                <Badge className={`${getStatusConfig(order.status).bgColor} ${getStatusConfig(order.status).color} shrink-0`}>
                   {getStatusConfig(order.status).label}
                 </Badge>
               </div>

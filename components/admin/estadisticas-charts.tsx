@@ -57,15 +57,15 @@ export function EstadisticasCharts({
   return (
     <>
       {/* Charts Row 1 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Sales Trend */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Tendencia de Ventas</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <LineChart data={salesTrend}>
+        <Card className="p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Tendencia de Ventas</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <LineChart data={salesTrend} margin={{ top: 5, right: 5, left: -15, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="dia" />
-              <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
+              <XAxis dataKey="dia" tick={{ fontSize: 11 }} />
+              <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} tick={{ fontSize: 11 }} />
               <Tooltip formatter={(value: number) => formatCurrency(value)} />
               <Line type="monotone" dataKey="ventas" stroke="#1e40af" strokeWidth={2} />
             </LineChart>
@@ -73,13 +73,13 @@ export function EstadisticasCharts({
         </Card>
 
         {/* Sales by Zone */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Ventas por Zona</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={salesByZone}>
+        <Card className="p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Ventas por Zona</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={salesByZone} margin={{ top: 5, right: 5, left: -15, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="zona" />
-              <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
+              <XAxis dataKey="zona" tick={{ fontSize: 11 }} />
+              <YAxis tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} tick={{ fontSize: 11 }} />
               <Tooltip formatter={(value: number) => formatCurrency(value)} />
               <Bar dataKey="ventas" fill="#1e40af" radius={[8, 8, 0, 0]} />
             </BarChart>
@@ -88,11 +88,11 @@ export function EstadisticasCharts({
       </div>
 
       {/* Charts Row 2 */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
         {/* Sales by Category */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Ventas por Categoría</h3>
-          <ResponsiveContainer width="100%" height={300}>
+        <Card className="p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Ventas por Categoría</h3>
+          <ResponsiveContainer width="100%" height={250}>
             <PieChart>
               <Pie
                 data={categoryData}
@@ -100,7 +100,7 @@ export function EstadisticasCharts({
                 cy="50%"
                 labelLine={false}
                 label={({ name, percent }) => `${name} (${(percent * 100).toFixed(0)}%)`}
-                outerRadius={100}
+                outerRadius={80}
                 fill="#8884d8"
                 dataKey="value"
               >
@@ -114,13 +114,13 @@ export function EstadisticasCharts({
         </Card>
 
         {/* Sales by Vendedor */}
-        <Card className="p-6">
-          <h3 className="text-lg font-semibold mb-4">Ventas por Vendedor</h3>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={salesByVendedor} layout="vertical">
+        <Card className="p-4 md:p-6">
+          <h3 className="text-base md:text-lg font-semibold mb-3 md:mb-4">Ventas por Vendedor</h3>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={salesByVendedor} layout="vertical" margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} />
-              <YAxis type="category" dataKey="name" width={80} />
+              <XAxis type="number" tickFormatter={(value) => `$${(value / 1000).toFixed(0)}k`} tick={{ fontSize: 11 }} />
+              <YAxis type="category" dataKey="name" width={60} tick={{ fontSize: 11 }} />
               <Tooltip formatter={(value: number) => formatCurrency(value)} />
               <Bar dataKey="ventas" fill="#dc2626" radius={[0, 8, 8, 0]} />
             </BarChart>
